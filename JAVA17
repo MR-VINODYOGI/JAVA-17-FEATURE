@@ -1,0 +1,79 @@
+import java.util.random.RandomGenerator; // Java 17 enhanced RandomGenerator interface
+
+// Main class demonstrating Java 17 features
+public class JAVA17 {
+
+	// Switch Statement Enhancements (Pattern matching for switch not fully
+	// available in Java 17 but simpler expressions are)
+	public static String getDayType(String day) {
+		return switch (day) {
+		case "MONDAY", "FRIDAY", "SUNDAY" -> "Start or End of Week!";
+		case "TUESDAY", "WEDNESDAY", "THURSDAY" -> "Mid-week Day!";
+		case "SATURDAY" -> "Weekend!";
+		default -> throw new IllegalArgumentException("Unknown day: " + day);
+		};
+	}
+
+	// Sealed Classes - Demonstrating restrictions on which classes can extend or
+	// implement a class
+	public sealed interface Vehicle permits Car, Bike { // Only Car and Bike can extend Vehicle
+		String getType();
+	}
+
+	public static final class Car implements Vehicle {
+		@Override
+		public String getType() {
+			return "Car";
+		}
+	}
+
+	public static final class Bike implements Vehicle {
+		@Override
+		public String getType() {
+			return "Bike";
+		}
+	}
+
+	// Text Blocks - Multiline strings in Java 17
+	public static String getJsonExample() {
+		return """
+				{
+				    "name": "Vinod Yogi",
+				    "age": 29,
+				    "role": "Java Developer"
+				}
+				""";
+	}
+
+	// Record Class - Immutable data classes introduced in Java 17
+	public record Person(String name, int age) {
+	}
+
+	// Pseudorandom Number Generators - Java 17 introduced better random number
+	// generation algorithms
+	public static int getRandomNumber() {
+		RandomGenerator randomGenerator = RandomGenerator.getDefault();
+		return randomGenerator.nextInt(100); // Generates a random number between 0 and 99
+	}
+
+	public static void main(String[] args) {
+		// 1. Switch Statement Enhancements Example
+		System.out.println("Switch Statement Output: " + getDayType("SATURDAY"));
+
+		// 2. Sealed Classes Example
+		Vehicle car = new Car();
+		Vehicle bike = new Bike();
+		System.out.println("Vehicle Type (Car): " + car.getType());
+		System.out.println("Vehicle Type (Bike): " + bike.getType());
+
+		// 3. Text Block Example
+		System.out.println("Text Block Example (JSON): \n" + getJsonExample());
+
+		// 4. Record Class Example
+		Person person = new Person("Vinod Yogi", 29);
+		System.out.println("Record Class Output: " + person.name() + " is " + person.age() + " years old.");
+
+		// 5. Pseudorandom Number Generator Example
+		System.out.println("Pseudorandom Number: " + getRandomNumber());
+	}
+}
